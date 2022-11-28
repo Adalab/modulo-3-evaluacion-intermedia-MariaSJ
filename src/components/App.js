@@ -4,9 +4,6 @@ import { useState } from 'react';
 //import callToApi from '../services/api';
 //import ls from '../services/localStorage';
 
-// STATES
-
-
 
 // USEEFFECT
 
@@ -21,6 +18,7 @@ import { useState } from 'react';
 
 function App() {
 
+// STATES
   const [adalabers, setAdalabers] = useState(listAdalab);
   const [newAdalaber, setNewAdalaber] = useState({
     id: "",
@@ -28,7 +26,10 @@ function App() {
     counselor: "",
     speciality: "",
   });
-  const [search, setSearch] = useState('');
+  const [searchName, setSearchName] = useState("");
+  const [searchCounselor, setSearchCounselor ] = useState("");
+
+  // HANDLE FUNCTIONS
 
   const handleNewAdalaber = (ev) => {
     setNewAdalaber({...newAdalaber, [ev.target.id]: ev.target.value });
@@ -40,8 +41,17 @@ function App() {
     setAdalabers([...adalabers, newAdalaber]);
   }
 
+  const handleSearchName = (ev) => {
+    setSearchName(ev.target.value)
+  }
+  const handleSearchCounselor = (ev) => {
+    setSearchCounselor(ev.target.value)
+  }
+
+
   const htmlAdalabers = adalabers
-    .filter
+    .filter((adalabers) => adalabers.name.toLowerCase().includes(searchName.toLowerCase()))
+    .filter((adalabers) => adalabers.counselor.includes(searchCounselor))
     .map((oneAdalaber) => {
     return (
       <tr className='adalaber__row' key={oneAdalaber.id}>
@@ -53,15 +63,15 @@ function App() {
   });
   
   
-
   return (
     <>
     <h1>Adalabers</h1>
       <form action="">
         <label htmlFor="name">Nombre:</label>
-        <input type="text" name="name" id="name" placeholder='Ej:Maricarmen' />
+        <input type="text" name="name" id="name" placeholder='Ej:Maricarmen' onInput={handleSearchName} />
         <label htmlFor="counselor">Escoge una tutora:</label>
-        <select name="counselor" id="counselor">
+        <select name="counselor" id="counselor" onInput={handleSearchCounselor}>
+          <option value="anyone" defaultChecked>Cualquiera</option>
           <option value="Yanelis">Yanelis</option>
           <option value="Iván">Iván</option>
           <option value="Dayana">Dayana</option>
