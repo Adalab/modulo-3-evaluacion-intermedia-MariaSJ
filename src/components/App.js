@@ -58,11 +58,11 @@ function App() {
         <td className='adalaber__name'>{oneAdalaber.name}</td>
         <td className='adalaber__counselor'>{oneAdalaber.counselor}</td>
         <td className='adalaber__speciality'>{oneAdalaber.speciality}</td>
-        <td className='adalaber__socialmedia'>
+        {/* <td className='adalaber__socialmedia'>
         {oneAdalaber.social_networks.map((social) => {
           return <a href="http://" target="_blank" rel="noopener noreferrer">{social}</a>
         })}
-        </td> 
+        </td>  */}
       </tr>
     )
   });
