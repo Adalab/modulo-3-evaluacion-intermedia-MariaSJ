@@ -1,25 +1,14 @@
 import '../styles/App.scss';
-import listAdalab from "../data/adalabers.json";
-import { useState } from 'react';
-//import callToApi from '../services/api';
+//import listAdalab from "../data/adalabers.json";
+import { useEffect, useState } from 'react';
+import callToApi from '../services/api';
 //import ls from '../services/localStorage';
 
-
-// USEEFFECT
-
-// useEffect(() => {
-//   // Dentro de useEffect llamamos a la API
-//   callToApi().then((data) => {
-//     // Cuando la API responde guardamos los datos en el estado para que se vuelva a renderizar el componente X
-//     X(data);
-//   });
-//   // Aquí ponemos un array vacío porque solo queremos que se llame a la API la primera vez
-// }, []);
 
 function App() {
 
 // STATES
-  const [adalabers, setAdalabers] = useState(listAdalab);
+  const [adalabers, setAdalabers] = useState([]);
   const [newAdalaber, setNewAdalaber] = useState({
     id: "",
     name: "",
@@ -27,13 +16,25 @@ function App() {
     speciality: "",
   });
   const [searchName, setSearchName] = useState("");
-  const [searchCounselor, setSearchCounselor ] = useState("");
+  const [searchCounselor, setSearchCounselor] = useState("");
+  
+  
+// USEEFFECT
+
+useEffect(() => {
+  // Dentro de useEffect llamamos a la API
+  callToApi().then((data) => {
+    // Cuando la API responde guardamos los datos en el estado para que se vuelva a renderizar el componente X
+    setAdalabers(data.results);
+  });
+  // Aquí ponemos un array vacío porque solo queremos que se llame a la API la primera vez
+}, []);
+
 
   // HANDLE FUNCTIONS
 
   const handleNewAdalaber = (ev) => {
     setNewAdalaber({...newAdalaber, [ev.target.id]: ev.target.value });
-    
   }
 
   const handleClick = (event) => {
@@ -72,9 +73,9 @@ function App() {
     <h1>Adalabers</h1>
       <form action="">
         <label htmlFor="name">Nombre:</label>
-        <input type="text" name="name" id="name" placeholder='Ej:Maricarmen' onInput={handleSearchName} />
+        <input type="text" name="name" id="name" placeholder='Ej:Maricarmen' value={searchName} onInput={handleSearchName} />
         <label htmlFor="counselor">Escoge una tutora:</label>
-        <select name="counselor" id="counselor" onInput={handleSearchCounselor}>
+        <select name="counselor" id="counselor" value={searchCounselor} onInput={handleSearchCounselor}>
           <option value="anyone" defaultChecked>Cualquiera</option>
           <option value="Yanelis">Yanelis</option>
           <option value="Iván">Iván</option>
@@ -99,11 +100,11 @@ function App() {
       <hr />
       <form action="">
         <label htmlFor="name">Nombre:</label>
-        <input type="text" name="name" id="name" onInput={handleNewAdalaber}/>
+        <input type="text" name="name" id="name" value={newAdalaber.name} onInput={handleNewAdalaber}/>
         <label htmlFor="counselor">Tutora:</label>
-        <input type="text" name="counselor" id="counselor" onInput={handleNewAdalaber} />
+        <input type="text" name="counselor" id="counselor" value={newAdalaber.counselor} onInput={handleNewAdalaber} />
         <label htmlFor="speciality">Especialidad:</label>
-        <input type="text" name="speciality" id="speciality" onInput={handleNewAdalaber} />
+        <input type="text" name="speciality" id="speciality" value={newAdalaber.speciality} onInput={handleNewAdalaber} />
         <input type="submit" value="Añadir" onClick={handleClick} />
       </form>
     </>
