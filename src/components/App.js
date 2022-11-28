@@ -1,9 +1,12 @@
 import '../styles/App.scss';
-//import {useEffect, useState} from 'react';
+import listAdalab from "../data/adalabers.json";
+import { useState } from 'react';
 //import callToApi from '../services/api';
 //import ls from '../services/localStorage';
 
 // STATES
+
+
 
 // USEEFFECT
 
@@ -17,10 +20,40 @@ import '../styles/App.scss';
 // }, []);
 
 function App() {
+
+  const [adalabers, setAdalabers] = useState(listAdalab);
+
+  const htmlAdalabers = adalabers.results.map((oneAdalaber) => {
+    return (
+      <tr className='adalaber__row' key={oneAdalaber.id}>
+        <td className='adalaber__name'>{oneAdalaber.name}</td>
+        <td className='adalaber__counselor'>{oneAdalaber.counselor}</td>
+        <td className='adalaber__speciality'>{oneAdalaber.speciality}</td>
+      </tr>
+    )
+  });
+
   return (
-    <div>
-      <h1>Hello world</h1>
-    </div>
+    <>
+    <h1>Adalabers</h1>
+      {/* <form action="">
+      </form> */}
+      <table className="table">
+        {/* <!-- Fila de cabecera --> */}
+        <thead><tr>
+          <th>Nombre</th>
+          <th>Tutora</th>
+          <th>Especialidad</th>
+        </tr></thead>
+        {/* <!-- Fin fila de cabecera --> */}
+        <tbody>
+          {htmlAdalabers}
+        </tbody>
+      </table>
+      <h2>Añadir una nueva adalaber</h2>
+      <hr />
+      
+    </>
   );
 }
 
