@@ -22,8 +22,27 @@ import { useState } from 'react';
 function App() {
 
   const [adalabers, setAdalabers] = useState(listAdalab);
+  const [newAdalaber, setNewAdalaber] = useState({
+    id: "",
+    name: "",
+    counselor: "",
+    speciality: "",
+  });
+  const [search, setSearch] = useState('');
 
-  const htmlAdalabers = adalabers.results.map((oneAdalaber) => {
+  const handleNewAdalaber = (ev) => {
+    setNewAdalaber({...newAdalaber, [ev.target.id]: ev.target.value });
+    
+  }
+
+  const handleClick = (event) => {
+    event.preventDefault();
+    setAdalabers([...adalabers, newAdalaber]);
+  }
+
+  const htmlAdalabers = adalabers
+    .filter
+    .map((oneAdalaber) => {
     return (
       <tr className='adalaber__row' key={oneAdalaber.id}>
         <td className='adalaber__name'>{oneAdalaber.name}</td>
@@ -32,12 +51,23 @@ function App() {
       </tr>
     )
   });
+  
+  
 
   return (
     <>
     <h1>Adalabers</h1>
-      {/* <form action="">
-      </form> */}
+      <form action="">
+        <label htmlFor="name">Nombre:</label>
+        <input type="text" name="name" id="name" placeholder='Ej:Maricarmen' />
+        <label htmlFor="counselor">Escoge una tutora:</label>
+        <select name="counselor" id="counselor">
+          <option value="Yanelis">Yanelis</option>
+          <option value="Iván">Iván</option>
+          <option value="Dayana">Dayana</option>
+        </select>
+
+      </form>
       <table className="table">
         {/* <!-- Fila de cabecera --> */}
         <thead><tr>
@@ -52,7 +82,15 @@ function App() {
       </table>
       <h2>Añadir una nueva adalaber</h2>
       <hr />
-      
+      <form action="">
+        <label htmlFor="name">Nombre:</label>
+        <input type="text" name="name" id="name" onInput={handleNewAdalaber}/>
+        <label htmlFor="counselor">Tutora:</label>
+        <input type="text" name="counselor" id="counselor" onInput={handleNewAdalaber} />
+        <label htmlFor="speciality">Especialidad:</label>
+        <input type="text" name="speciality" id="speciality" onInput={handleNewAdalaber} />
+        <input type="submit" value="Añadir" onClick={handleClick} />
+      </form>
     </>
   );
 }
