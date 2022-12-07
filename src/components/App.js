@@ -89,7 +89,7 @@ function App() {
             <input type="text" name="name" id="name" placeholder='Ej:Maricarmen' value={searchName} onInput={handleSearchName} />
             <label htmlFor="counselor">Escoge una tutora:</label>
             <select name="counselor" id="counselor" value={searchCounselor} onInput={handleSearchCounselor}>
-              <option value={searchCounselor}>Cualquiera</option>
+              <option value={setSearchCounselor}>Cualquiera</option>
               <option value="Yanelis">Yanelis</option>
               <option value="Iván">Iván</option>
               <option value="Dayana">Dayana</option>
